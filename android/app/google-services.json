@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "642081924304",
+    "project_id": "moviereviewer-ac54c",
+    "storage_bucket": "moviereviewer-ac54c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642081924304:android:8f946c82ad1c6a9ba86ad5",
+        "android_client_info": {
+          "package_name": "com.movie_reviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642081924304-5ro9ako2g45ms5dup6k0go55vr0ra2b2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movie_reviewer",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "642081924304-loeu0k1l9e49e9pvqo3fn5gfspk62u3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7kLYDb7I80RFR8TtMpFbkxFelA1jeUwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642081924304-loeu0k1l9e49e9pvqo3fn5gfspk62u3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
