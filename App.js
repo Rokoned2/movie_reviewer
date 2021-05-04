@@ -1,24 +1,17 @@
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {StyleSheet, View} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import FAIcon from 'react-native-vector-icons/dist/FontAwesome';
 import EIcon from 'react-native-vector-icons/dist/Entypo';
-import { SearchBar } from 'react-native-elements';
+import {SearchBar} from 'react-native-elements';
 
 import ListScreen from './src/Screens/ListScreen/ListScreen';
-import EditReadScreen  from './src/Screens/EditReadScreen/EditReadScreen';
-import SigninScreen from './src/Screens/SigninScreen/SigninScreen'
-import SignupScreen from './src/Screens/SignupScreen/SignupScreen'
+import EditReadScreen from './src/Screens/EditReadScreen/EditReadScreen';
+import SigninScreen from './src/Screens/SigninScreen/SigninScreen';
+import SignupScreen from './src/Screens/SignupScreen/SignupScreen';
+import Modal from './src/components/Modal';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +21,7 @@ const MyStack = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = (query) => setSearchQuery(query);
   // // Handle user state changes
   // const onAuthStateChanged = (user) => {
   //   setUser(user);
@@ -51,83 +44,122 @@ const MyStack = () => {
   // }
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen 
-        name="List" 
-        component={ListScreen} 
+    <Stack.Navigator mode="modal">
+      <Stack.Screen
+        name="List"
+        component={ListScreen}
         options={{
           header: (props) => (
             <View style={styles.header}>
-              <EIcon 
+              <EIcon
                 {...props}
                 name="menu"
                 size={40}
-                style={{
-                  marginLeft: 10, 
-                }}
-              /> 
+                style={styles.burguerMenu}
+              />
               <View style={{flex: 1}}>
                 <SearchBar
                   placeholder="Search"
-                  style={{flex: 1, width: "100%"}}
+                  style={{flex: 1, width: '100%'}}
                   lightTheme={true}
-                  containerStyle={{ borderWidth: 0, backgroundColor: "transparent", width: "100%", borderColor: "transparent"}}
-                  inputContainerStyle={{backgroundColor: "transparent", width: "100%", borderWidth: 0}}
-                  leftIconContainerStyle={{display: "none"}}
+                  containerStyle={styles.containerStyle}
+                  inputContainerStyle={styles.inputContainerStyle}
+                  leftIconContainerStyle={{display: 'none'}}
                   // inputStyle={{backgroundColor: "black"}}
                   onChangeText={onChangeSearch}
                   value={searchQuery}
                 />
               </View>
-              <FAIcon 
+              <FAIcon
                 {...props}
                 name="user-circle"
                 size={40}
                 style={{
-                  marginRight: 10
+                  marginRight: 10,
                 }}
-                onPress={() => props.navigation.navigate("Signin")}
-              /> 
+                onPress={() => props.navigation.navigate('Modal')}
+              />
             </View>
-          )
+          ),
           // headerRight: (props) => (
-          //   <FAIcon 
+          //   <FAIcon
           //     {...props}
           //     name="user-circle"
           //     size={40}
           //     style={{
           //       marginRight: 5
           //     }}
-          //   /> 
+          //   />
           // ),
           // headerLeft: (props) => (
-          //   <EIcon 
+          //   <EIcon
           //     {...props}
           //     name="menu"
           //     size={40}
           //     style={{
           //       marginLeft: 5
           //     }}
-          //   /> 
+          //   />
           // )
         }}
       />
       <Stack.Screen name="EditRead" component={EditReadScreen} />
       <Stack.Screen name="Signin" component={SigninScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
-
+      <Stack.Screen
+        name="Modal"
+        component={Modal}
+        options={{
+          animationEnabled: true,
+          headerShown: false,
+          cardStyle: {
+            backgroundColor: 'rgba(0,0,0,0.15)',
+          },
+          cardOverlayEnabled: true,
+          cardStyleInterpolator: ({current: {progress}}) => {
+            return {
+              cardStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 0.5, 0.9, 1],
+                  outputRange: [0, 0.25, 0.7, 1],
+                }),
+              },
+              overlayStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 0.5],
+                  extrapolate: 'clamp',
+                }),
+              },
+            };
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  }
-})
-
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  burguerMenu: {
+    marginLeft: 10,
+  },
+  inputContainerStyle: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    borderWidth: 0,
+  },
+  containerStyle: {
+    borderWidth: 0,
+    backgroundColor: 'transparent',
+    width: '100%',
+    borderColor: 'transparent',
+  },
+});
 
 export default function App() {
   return (
@@ -136,6 +168,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-
-
